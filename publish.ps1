@@ -6,7 +6,7 @@ $ErrorActionPreference = "Stop"
 # Generate an image name and set the registry using the data in the "component.json" file
 #$component = Get-Content -Path "component.json" | ConvertFrom-Json
 #$image="$($component.registry)/$($component.name):$($component.version)-$($component.build)-rc"
-$image="pipdevs/data-microservice-node:1.0"
+$image="pipdevs/pip-services-beacons-node:1.0"
 $registry="pipdevs"
 
 # Automatically login to the server
