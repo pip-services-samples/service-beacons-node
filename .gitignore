@@ -3,6 +3,5 @@ npm-debug.log*
 /.vscode
 /node_modules
 /dist
-/obj
 /data/*.json
 /package-lock.json
