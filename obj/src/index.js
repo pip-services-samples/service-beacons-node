@@ -9,4 +9,5 @@ __export(require("./logic"));
 __export(require("./services/version1"));
 __export(require("./container"));
 __export(require("./build"));
+__export(require("./clients/version1"));
 //# sourceMappingURL=index.js.map
