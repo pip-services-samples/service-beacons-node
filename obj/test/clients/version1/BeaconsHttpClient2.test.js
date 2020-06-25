@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-var async = require('async');
+let _ = require('lodash');
+let async = require('async');
 const pip_services3_commons_node_1 = require("pip-services3-commons-node");
 const pip_services3_commons_node_2 = require("pip-services3-commons-node");
 const pip_services3_commons_node_3 = require("pip-services3-commons-node");
@@ -16,22 +17,21 @@ suite('BeaconsHttpClientV1_2', () => {
         let references = pip_services3_commons_node_3.References.fromTuples(new pip_services3_commons_node_2.Descriptor('beacons', 'client', 'http', 'default', '1.0'), client);
         client.setReferences(references);
         fixture = new BeaconsClientV1Fixture_1.BeaconsClientV1Fixture(client);
-        client.open(null, done);
+        client.open(null, null);
         var work = true;
         async.whilst(() => {
             return work;
         }, (callback) => {
             client.getBeacons('123', null, null, (error, page) => {
-                if (page.data.length == 0) {
+                if (_.isEmpty(page.data)) {
                     work = false;
                     callback();
+                    return;
                 }
-                console.log('data', page.data);
                 var counter = 0;
                 async.whilst(() => {
                     return counter != page.data.length;
                 }, (cb) => {
-                    //console.log('ID:', page.data[counter].id);
                     client.deleteBeaconById('123', page.data[counter].id, (err, beacon) => {
                         counter++;
                         cb();
@@ -40,6 +40,8 @@ suite('BeaconsHttpClientV1_2', () => {
                     callback(err);
                 });
             });
+        }, (err) => {
+            done();
         });
     });
     teardown((done) => {
@@ -50,8 +52,8 @@ suite('BeaconsHttpClientV1_2', () => {
     test('CRUD Operations', (done) => {
         fixture.testCrudOperations(done);
     });
-    // test('Calculate Position', (done) => {
-    //     fixture.testCalculatePosition(done);
-    // });
+    test('Calculate Position', (done) => {
+        fixture.testCalculatePosition(done);
+    });
 });
 //# sourceMappingURL=BeaconsHttpClient2.test.js.map

@@ -1,5 +1,6 @@
 
-var async = require('async');
+let _ = require('lodash');
+let async = require('async');
 
 import { ConfigParams, FilterParams, PagingParams } from 'pip-services3-commons-node';
 import { Descriptor } from 'pip-services3-commons-node';
@@ -29,40 +30,43 @@ suite('BeaconsHttpClientV1_2', () => {
 
         client.setReferences(references);
         fixture = new BeaconsClientV1Fixture(client);
-        client.open(null, done);
+        client.open(null, null);
 
         var work = true;
 
-        async.whilst( ()=> {
+        async.whilst(() => {
             return work
         },
             (callback) => {
                 client.getBeacons('123', null, null, (error, page) => {
-                    if (page.data.length == 0) {
+                    if (_.isEmpty(page.data)) {
                         work = false;
                         callback();
+                        return;
                     }
-                    console.log('data', page.data)
+                    
                     var counter = 0
-
-                    async.whilst(() => { 
-                        return counter != page.data.length 
+                    async.whilst(() => {
+                        return counter != page.data.length
                     },
                         (cb) => {
-                            
+
                             client.deleteBeaconById('123', page.data[counter].id, (err, beacon) => {
                                 counter++;
                                 cb();
                             })
                         },
                         (err) => {
+                            
                             callback(err);
                         }
                     )
                 })
+            }, (err)=>{
+                done();
             }
         )
-
+    
     });
 
     teardown((done) => {
@@ -75,8 +79,8 @@ suite('BeaconsHttpClientV1_2', () => {
         fixture.testCrudOperations(done);
     });
 
-    // test('Calculate Position', (done) => {
-    //     fixture.testCalculatePosition(done);
-    // });
+    test('Calculate Position', (done) => {
+        fixture.testCalculatePosition(done);
+    });
 
 });
