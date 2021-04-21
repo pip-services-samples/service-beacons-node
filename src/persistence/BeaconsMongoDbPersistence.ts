@@ -61,9 +61,9 @@ export class BeaconsMongoDbPersistence
         };
 
         this._collection.findOne(criteria, (err, item) => {
-            
             if (item != null) this._logger.trace(correlationId, "Found beacon by %s", udi);
             else this._logger.trace(correlationId, "Cannot find beacon by %s", udi);
+            
             item = this.convertToPublic(item);
             callback(err, item);
         });

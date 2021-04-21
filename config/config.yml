@@ -8,7 +8,10 @@
 - descriptor: "pip-services:logger:console:default:1.0"
   level: "trace"
 
-# Perfomance counter that post values to log
+# Tracer that posts records to log
+- descriptor: "pip-services:tracer:log:default:1.0"
+
+# Performance counters that post values to log
 - descriptor: "pip-services:counters:log:default:1.0"
 
 {{^if MONGO_ENABLED}}{{^if FILE_ENABLED}}
@@ -33,7 +36,7 @@
 {{/if}}
 
 # Controller
-#- descriptor: "beacons:controller:default:default:1.0"
+- descriptor: "beacons:controller:default:default:1.0"
 
 # Shared HTTP Endpoint
 - descriptor: "pip-services:endpoint:http:default:1.0"
@@ -44,9 +47,14 @@
 
 # HTTP Service V1
 - descriptor: "beacons:service:http:default:1.0"
+  swagger:
+    enable: true
 
 # Hearbeat service
 - descriptor: "pip-services:heartbeat-service:http:default:1.0"
 
 # Status service
 - descriptor: "pip-services:status-service:http:default:1.0"
+
+# Swagger service
+- descriptor: "pip-services:swagger-service:http:default:1.0"
