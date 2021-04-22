@@ -1,4 +1,4 @@
-let BeaconsProcess = require('../obj/src/container/BeaconsProcess').BeaconsProcess;
+const BeaconsProcess = require('../obj/src/container/BeaconsProcess').BeaconsProcess;
 
 try {
     let proc = new BeaconsProcess();
