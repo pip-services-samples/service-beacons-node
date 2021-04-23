@@ -7,8 +7,8 @@ suite('BeaconsFilePersistence', () => {
     let persistence;
     let fixture;
     setup((done) => {
-        persistence = new BeaconsFilePersistence_1.BeaconsFilePersistence('data/beacons.test.json');
-        persistence.configure(new pip_services3_commons_node_1.ConfigParams());
+        persistence = new BeaconsFilePersistence_1.BeaconsFilePersistence();
+        persistence.configure(pip_services3_commons_node_1.ConfigParams.fromTuples("path", "data/beacons.test.json"));
         fixture = new BeaconsPersistenceFixture_1.BeaconsPersistenceFixture(persistence);
         persistence.open(null, (err) => {
             persistence.clear(null, done);

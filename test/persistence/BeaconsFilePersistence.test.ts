@@ -8,8 +8,10 @@ suite('BeaconsFilePersistence', () => {
     let fixture: BeaconsPersistenceFixture;
 
     setup((done) => {
-        persistence = new BeaconsFilePersistence('data/beacons.test.json');
-        persistence.configure(new ConfigParams());
+        persistence = new BeaconsFilePersistence();
+        persistence.configure(ConfigParams.fromTuples(
+            "path", "data/beacons.test.json"
+        ));
 
         fixture = new BeaconsPersistenceFixture(persistence);
 
