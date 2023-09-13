@@ -14,15 +14,17 @@
 # Performance counters that post values to log
 - descriptor: "pip-services:counters:log:default:1.0"
 
-{{^if MONGO_ENABLED}}{{^if FILE_ENABLED}}
+{{^MONGO_ENABLED}}
+{{^FILE_ENABLED}}
 # Memory persistence
 - descriptor: "beacons:persistence:memory:default:1.0"
-{{/if}}{{/if}}
+{{/FILE_ENABLED}}
+{{/MONGO_ENABLED}}
 
 {{#if FILE_ENABLED}}
 # File persistence
 - descriptor: "beacons:persistence:file:default:1.0"
-  path: {{FILE_PATH}}{{^if FILE_PATH}}"./data/beacons.json"{{/if}}
+  path: {{FILE_PATH}}{{^FILE_PATH}}"./data/beacons.json"{{/FILE_PATH}}
 {{/if}}
 
 {{#if MONGO_ENABLED}}
@@ -30,9 +32,9 @@
 - descriptor: "beacons:persistence:mongodb:default:1.0"
   connection:
     uri: {{MONGO_SERVICE_URI}}
-    host: {{MONGO_SERVICE_HOST}}{{^if MONGO_SERVICE_HOST}}"localhost"{{/if}}
-    port: {{MONGO_SERVICE_PORT}}{{^if MONGO_SERVICE_PORT}}27017{{/if}}
-    database: {{MONGO_DB}}{{^if MONGO_DB}}"test"{{/if}}
+    host: {{MONGO_SERVICE_HOST}}{{^MONGO_SERVICE_HOST}}"localhost"{{/MONGO_SERVICE_HOST}}
+    port: {{MONGO_SERVICE_PORT}}{{^MONGO_SERVICE_PORT}}27017{{/MONGO_SERVICE_PORT}}
+    database: {{MONGO_DB}}{{^MONGO_DB}}"test"{{/MONGO_DB}}
 {{/if}}
 
 # Controller
@@ -43,7 +45,7 @@
   connection:
     protocol: http
     host: 0.0.0.0
-    port: {{HTTP_PORT}}{{^if HTTP_PORT}}8080{{/if}}
+    port: {{HTTP_PORT}}{{^HTTP_PORT}}8080{{/HTTP_PORT}}
 
 # HTTP Service V1
 - descriptor: "beacons:service:http:default:1.0"
